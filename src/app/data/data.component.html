@@ -1,0 +1,96 @@
+<!-- <app-upload></app-upload>
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Age</th>
+  </tr>
+  <tr>
+    <td>Finn</td>
+    <td>10</td>
+  </tr>
+</table> -->
+
+<div class="container-fluid m-0 p-2">
+
+  <!-- <div class="row m-1">
+    <div class="card w-100">
+      <div class="card-body">
+          <h1 class="h1-reponsive mb-4 mt-2 blue-text font-bold">Spend Data</h1>
+          <p class="lead">Manage transactional spend data. Transactional data is analyzed by vendor and by category and matched with existing vendor contracts which are uploaded on the contracts page.</p>
+      </div>
+    </div>
+  </div> -->
+
+  <div class="row m-2">
+    <div class="col-md-12">
+        <div class="card w-100">
+          <!-- <h5 class="card-header">Spend Data</h5> -->
+          <div class="card-body">
+
+            <div class="d-flex">
+              <div class="mr-auto p-2">
+                <!-- <a href="#" style="font-weight:bold;">Download schema</a> -->
+              </div>
+              <div class="p-2">
+              </div>
+              <div class="p-2">
+                  <app-upload></app-upload>
+              </div>
+            </div>
+
+            <div class="d-flex bd-highlight mb-3" style="font-weight: bold;">
+              <div class="p-2 bd-highlight">
+                File Count: {{ fileCount }}
+              </div>
+              <div class="p-2 bd-highlight">
+                Last Uploaded: 5 seconds ago
+              </div>
+              <div class="ml-auto p-2 bd-highlight"></div>
+            </div>
+
+            <div class="card">
+              <table>
+                <tr>
+                  <th>File Name</th>
+                  <th>Date Uploaded</th>
+                  <th>Row Count</th>
+                  <th>Categorized</th>
+                </tr>
+                <tbody>
+                  <tr *ngFor = "let file of files">
+                    <td>{{ file.fileName }}</td>
+                    <td>{{ file.date | date}}</td>
+                  </tr>
+                  <!-- <tr>
+                    <td>Finn</td>
+                    <td>10</td>
+                  </tr>
+                  <tr>
+                    <td>Finn</td>
+                    <td>10</td>
+                  </tr> -->
+                </tbody>
+              </table>
+              <!-- <table style="" ng-table="filesTable" ng-hide="!showFilesTable" class="table" ng-init="getFiles()">
+                <tbody>
+                  <tr ng-repeat="row in $data">
+                    <td title="'Date Uploaded'" sortable="'date'">{{ extractDate(row.date) }}</td>
+                    <td title="'File Name'" sortable="'originalName'" filter="{originalName: 'text'}">{{ row.originalName }}</td>
+                    <td title="'Type'" sortable="'type'">{{ row.type }}</td>
+                    <td title="'Currency'" sortable="'currency'">{{ row.currency }}</td>
+                    <td title="'Total Amount'" sortable="'total'">{{ row.total }}</td>
+                    <td title="'Rows'" sortable="'num_lines'">{{ row.num_lines }}</td>
+                    <td title="'From'" sortable="'min_date'">{{ extractDate(row.min_date) }}</td>
+                    <td title="'To'" sortable="'max_date'">{{ extractDate(row.max_date) }}</td>
+                    <td><a href="" ng-click="deleteFile(row._id)"><i class="fas fa-trash"></i></a></td>
+                  </tr>
+                </tbody>
+              </table> -->
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+</div>
