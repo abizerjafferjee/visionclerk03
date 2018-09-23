@@ -41,17 +41,31 @@ export class UploadService {
           progress.next(percentDone);
         } else if (event instanceof HttpResponse) {
 
-          if (event.body.success == false) {
-
+          if (event.body == {}) {
             status[file.name] = {
               progress: progress.asObservable(),
               success: false,
-              msg: event.body.msg
+              msg: msg
             };
 
             return status;
 
           }
+          // else {
+          //
+          //   if (event.body.success == false) {
+          //
+          //     status[file.name] = {
+          //       progress: progress.asObservable(),
+          //       success: false,
+          //       msg: event.body.msg
+          //     };
+          //
+          //     return status;
+          //
+          //   }
+          //
+          // }
 
           // Close the progress-stream if we get an answer form the API
           // The upload is complete
