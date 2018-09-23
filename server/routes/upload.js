@@ -1,8 +1,10 @@
 var fs = require('fs');
 var jwt = require('jsonwebtoken');
+const IncomingForm = require('formidable').IncomingForm;
 var config = require('../config/database');
 var File = require('../models/file');
-const IncomingForm = require('formidable').IncomingForm;
+var client = require('../routes/sql/connect');
+var writeData  = require('../routes/sql/writedata');
 
 getToken = function (headers) {
   if (headers && headers.authorization) {
@@ -43,27 +45,37 @@ module.exports = function upload(req, res) {
       fs.writeFile(relPath, dataBuffer, function(err) {
         if(err) {
           return console.log(err);
-        }
-        console.log("The file was saved!");
-      });
-
-      // write file details to mongo
-      var newFile = new File({
-        fileName: file.name,
-        filePath: relPath,
-        date: Date.now(),
-        user: user._id
-      });
-
-      newFile.save(function(err, file) {
-        if (err) {
-          console.log(err);
         } else {
-          console.log(file);
+          console.log("The file was saved!");
+
+          writeData(relPath, function(rowCount) {
+            
+            console.log(rowCount);
+            // write file details to mongo
+            var newFile = new File({
+              fileName: file.name,
+              filePath: relPath,
+              date: Date.now(),
+              rows: rowCount,
+              user: user._id
+            });
+
+            newFile.save(function(err, file) {
+              if (err) {
+                console.log(err);
+              } else {
+                console.log(file);
+                // var rowCount = writeData(relPath);
+                res.json({success: true, msg: "Upload Successful"});
+                // if (write != null) {
+                // }
+              }
+            });
+
+          });
+
         }
       });
-
-      res.json({success: true, msg: "Upload Successful"});
 
     }
       // Do something with the file

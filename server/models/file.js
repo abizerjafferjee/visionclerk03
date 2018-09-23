@@ -5,6 +5,7 @@ var fileSchema = new mongoose.Schema({
   fileName: {type: String, required: true},
   filePath: {type: String, required: true},
   date: {type: Date, required: true},
+  rows: {type: String},
   user: {type: mongoose.Schema.Types.ObjectId, ref:"User", required: true}
 });
 

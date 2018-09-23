@@ -121,7 +121,6 @@ app.get('/data/files', function(req, res) {
   }
 
   File.find({user:user._id}, function(err, files) {
-    console.log(files);
     res.send(files);
   });
 });

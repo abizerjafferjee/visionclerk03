@@ -11,6 +11,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 export class DataComponent implements OnInit {
 
   url = 'http://localhost:3000';
+  files;
+  fileCount;
 
   constructor(private http: HttpClient) { }
 
