@@ -1,25 +1,4 @@
-<!-- <app-upload></app-upload>
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Age</th>
-  </tr>
-  <tr>
-    <td>Finn</td>
-    <td>10</td>
-  </tr>
-</table> -->
-
 <div class="container-fluid m-0 p-2">
-
-  <!-- <div class="row m-1">
-    <div class="card w-100">
-      <div class="card-body">
-          <h1 class="h1-reponsive mb-4 mt-2 blue-text font-bold">Spend Data</h1>
-          <p class="lead">Manage transactional spend data. Transactional data is analyzed by vendor and by category and matched with existing vendor contracts which are uploaded on the contracts page.</p>
-      </div>
-    </div>
-  </div> -->
 
   <div class="row m-2">
     <div class="col-md-12">
@@ -40,56 +19,35 @@
 
             <div class="d-flex bd-highlight mb-3" style="font-weight: bold;">
               <div class="p-2 bd-highlight">
-                File Count: {{ fileCount }}
+                Files: {{ fileCount }}
               </div>
               <div class="p-2 bd-highlight">
-                Last Uploaded: 5 seconds ago
               </div>
               <div class="ml-auto p-2 bd-highlight"></div>
             </div>
 
-            <div class="card">
-              <table>
-                <tr>
-                  <th>File Name</th>
-                  <th>Date Uploaded</th>
-                  <th>Row Count</th>
-                  <th>Categorized</th>
+            <table class="table table-bordered">
+              <tr>
+                <th></th>
+                <th>File Name</th>
+                <th>Date Uploaded</th>
+                <th>Rows</th>
+                <th>Delete</th>
+                <th>Data</th>
+                <th>Actions</th>
+              </tr>
+              <tbody>
+                <tr *ngFor = "let file of files; let i = index" [attr.data-index]="i">
+                  <td>{{ i }}</td>
+                  <td>{{ file.fileName }}</td>
+                  <td>{{ file.date | date }}</td>
+                  <td>{{ file.rows }}</td>
+                  <td><button type="button" class="btn btn-danger btn-sm" (click)="delete(file._id)">Delete</button></td>
+                  <td><button type="button" class="btn btn-success btn-sm" [routerLink]="['/view', file._id]">View</button></td>
+                  <td><button type="button" class="btn btn-success btn-sm" [routerLink]="['/apps', file._id]">Next</button></td>
                 </tr>
-                <tbody>
-                  <tr *ngFor = "let file of files">
-                    <td>{{ file.fileName }}</td>
-                    <td>{{ file.date | date }}</td>
-                    <td>{{ file.rows }}</td>
-
-                  </tr>
-                  <!-- <tr>
-                    <td>Finn</td>
-                    <td>10</td>
-                  </tr>
-                  <tr>
-                    <td>Finn</td>
-                    <td>10</td>
-                  </tr> -->
-                </tbody>
-              </table>
-              <!-- <table style="" ng-table="filesTable" ng-hide="!showFilesTable" class="table" ng-init="getFiles()">
-                <tbody>
-                  <tr ng-repeat="row in $data">
-                    <td title="'Date Uploaded'" sortable="'date'">{{ extractDate(row.date) }}</td>
-                    <td title="'File Name'" sortable="'originalName'" filter="{originalName: 'text'}">{{ row.originalName }}</td>
-                    <td title="'Type'" sortable="'type'">{{ row.type }}</td>
-                    <td title="'Currency'" sortable="'currency'">{{ row.currency }}</td>
-                    <td title="'Total Amount'" sortable="'total'">{{ row.total }}</td>
-                    <td title="'Rows'" sortable="'num_lines'">{{ row.num_lines }}</td>
-                    <td title="'From'" sortable="'min_date'">{{ extractDate(row.min_date) }}</td>
-                    <td title="'To'" sortable="'max_date'">{{ extractDate(row.max_date) }}</td>
-                    <td><a href="" ng-click="deleteFile(row._id)"><i class="fas fa-trash"></i></a></td>
-                  </tr>
-                </tbody>
-              </table> -->
-            </div>
-
+              </tbody>
+            </table>
           </div>
 
         </div>

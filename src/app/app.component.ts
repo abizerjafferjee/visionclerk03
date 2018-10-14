@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {RoutesService} from './routes.service';
 import { HttpClient } from '@angular/common/http';
+import { AuthenticationService } from './authentication.service';
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-root',
@@ -8,27 +10,29 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  title = 'vc';
   url = 'http://localhost:3000';
-  message = '';
+  user;
+  show = true;
 
-  constructor (private http: HttpClient, private routesService: RoutesService) {}
-
-  ngOnInit() {
-    this.http.get(this.url + '/test')
-      .subscribe(resp => {
-        this.title = resp["data"];
-        // localStorage.setItem('jwtToken', this.data.token);
-        // this.router.navigate(['books']);
-      }, err => {
-        this.message = "Something went wrong";
-      });
+  constructor (private http: HttpClient, private routesService: RoutesService, private auth: AuthenticationService, private router: Router) {
   }
 
-    // this.routesService.getMain().subscribe(title => {
-    //   // console.log(title.data["data"]);
-    //   console.log(title["data"]);
-    //   this.title = title["data"];
-    // });
-    //
+  ngOnInit() {
+    this.getUser();
+  }
+
+  getUser() {
+    if (this.auth.isLoggedIn()) {
+      this.user = this.auth.getUserDetails();
+      this.show = false;
+    } else {
+      this.user = {};
+      this.show = true;
+    }
+  }
+
+  logout() {
+    this.auth.logout();
+  }
+
 }

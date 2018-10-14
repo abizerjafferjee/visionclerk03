@@ -31,62 +31,58 @@ module.exports = function upload(req, res) {
   var form = new IncomingForm();
 
   form.on('file', (field, file) => {
-    // console.log(field);
-    // console.log(file);
-
-    // var fileName = Date.now() + '_' + file.name;
     if (!file.name.match(/\.(csv)$/)) {
-      res.json({success: false, msg: "File type must be csv"});
+      return res.json({success: false, msg: "File type must be csv."});
     } else {
 
-      // write file to directory
+      var relPath = './test_data/' + Date.now() + '_' + user._id + '_' + file.name;
+
+      var filter_name = file.name.replace(/-/g, '').replace(/\./g, '');
+      var table_ref = 'd' + Date.now() + user._id + filter_name;
+      table_ref = table_ref.substring(0,63);
+
       var dataBuffer = fs.readFileSync(file.path);
-      var relPath = './test_data/' + file.name;
       fs.writeFile(relPath, dataBuffer, function(err) {
         if(err) {
-          return console.log(err);
+          return res.json({success: false, msg: "File could not be written. Please make sure file does not contain encoded characters."});;
         } else {
-          console.log("The file was saved!");
 
-          writeData(relPath, function(rowCount) {
-            
-            console.log(rowCount);
-            // write file details to mongo
-            var newFile = new File({
-              fileName: file.name,
-              filePath: relPath,
-              date: Date.now(),
-              rows: rowCount,
-              user: user._id
-            });
-
-            newFile.save(function(err, file) {
-              if (err) {
-                console.log(err);
-              } else {
-                console.log(file);
-                // var rowCount = writeData(relPath);
-                res.json({success: true, msg: "Upload Successful"});
-                // if (write != null) {
-                // }
-              }
-            });
-
+          var newFile = new File({
+            fileName: file.name,
+            filePath: relPath,
+            table_ref: table_ref,
+            date: Date.now(),
+            created: false,
+            user: user._id
           });
 
+          newFile.save(function(err, file) {
+            if (err) {
+              res.json({success: false, msg: "File could not be uploaded due to document database error. Please try again."});
+            } else {
+              writeData(file, function(response) {
+                if (response.success) {
+                  File.findById(file._id, function(err, originalFile) {
+                    if (err) {
+                      res.json({success: false, msg: "File could not be uploaded due to document database error. Please try again."});
+                    } else {
+                      originalFile.rows = response.rows;
+                      originalFile.created = true;
+                      originalFile.save();
+                      res.json(response);
+                    }
+                  });
+                } else {
+                  res.json(response);
+                }
+              });
+            }
+          });
         }
-      });
 
+      });
     }
-      // Do something with the file
-      // e.g. save it to the database
-      // you can access it using file.path
   });
 
-  // form.on('end', () => {
-  //     res.json({success: true, msg: "Upload Successful"});
-  // });
-
   form.parse(req);
-
 };

@@ -17,6 +17,24 @@
     </mat-list>
   </mat-dialog-content>
 
+  <div class="mt-2" *ngIf="failed == true">
+    <p>{{serverMsg}}</p>
+    <div class="table-wrapper-scroll-y">
+      <table class="table">
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+        <tbody>
+          <tr *ngFor = "let error of errors">
+            <td>{{ error.type }}</td>
+            <td>{{ error.msg }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
   <!-- <div class="alert alert-warning alert-dismissible" role="alert" *ngIf="serverMsg !== ''">
     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
     {{serverMsg}}

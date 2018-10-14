@@ -16,6 +16,9 @@ export class DialogComponent{
   showCancelButton = true;
   uploading = false;
   uploadSuccessful = false;
+  failed = false;
+  serverMsg;
+  errors;
 
   constructor(public dialogRef: MatDialogRef<DialogComponent>, public uploadService: UploadService) {}
 
@@ -47,7 +50,6 @@ export class DialogComponent{
 
     // start the upload and save the progress map
     this.progress = this.uploadService.upload(this.files);
-    // console.log(this.progress);
 
     // convert the progress map into an array
     let allProgressObservables = [];
@@ -68,16 +70,35 @@ export class DialogComponent{
     this.showCancelButton = false;
 
     // When all progress-observables are completed...
-    forkJoin(allProgressObservables).subscribe(end => {
-      // ... the dialog can be closed again...
-      this.canBeClosed = true;
-      this.dialogRef.disableClose = false;
+    forkJoin(allProgressObservables).subscribe(resp => {
 
-      // ... the upload was successful...
-      this.uploadSuccessful = true;
+      if (resp[0].success) {
+        // ... the dialog can be closed again...
+        this.canBeClosed = true;
+        this.dialogRef.disableClose = false;
 
-      // ... and the component is no longer uploading
-      this.uploading = false;
+        // ... the upload was successful...
+        this.uploadSuccessful = true;
+
+        // ... and the component is no longer uploading
+        this.uploading = false;
+      } else {
+
+        this.failed = true;
+        this.serverMsg = resp[0].msg;
+        this.errors = resp[0].errors;
+
+        // ... the dialog can be closed again...
+        this.canBeClosed = true;
+        this.dialogRef.disableClose = false;
+
+        // ... the upload was successful...
+        this.uploadSuccessful = true;
+
+        // ... and the component is no longer uploading
+        this.uploading = false;
+      }
+
     });
   }
 

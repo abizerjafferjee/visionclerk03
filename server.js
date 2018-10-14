@@ -14,8 +14,8 @@ var bcrypt = require('bcrypt-nodejs');
 var flash = require('express-flash');
 const cors = require('cors');
 var jwt = require('jsonwebtoken');
+var request = require("request");
 
-// const api = require('./server/routes/api');
 var config = require('./server/config/database');
 var auth = require('./server/routes/auth')
 var upload = require('./server/routes/upload')
@@ -32,12 +32,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({'extended':'false'}));
 app.use(express.static(path.join(__dirname, 'dist')));
 app.use('/', express.static(path.join(__dirname, 'dist')));
-// app.use(require('express-session')({
-//     secret: 'keyboard cat',
-//     resave: false,
-//     saveUninitialized: false
-// }));
-// app.use(flash());
 
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
@@ -50,7 +44,6 @@ app.use(function(err, req, res, next) {
 });
 
 app.use(passport.initialize());
-// app.use(passport.session());
 
 passport.use(new localStrategy(function(username, password, done) {
   User.findOne({username: username}, function(err, user) {
@@ -120,13 +113,109 @@ app.get('/data/files', function(req, res) {
     var user = jwt.verify(token, config.secret);
   }
 
-  File.find({user:user._id}, function(err, files) {
+  File.find({user:user._id, created: true}, function(err, files) {
     res.send(files);
+  });
+});
+
+app.post('/data/datatable', function(req, res) {
+  File.findById(req.body.id, function(err, file) {
+    if (err) {
+      return res.json({success: false});
+    } else {
+      var options = {
+        uri: "http://localhost:5000/datatable",
+        method: 'POST',
+        json: file
+      };
+      request(options, function (error, response, body) {
+        if (error) {
+          return res.json({success: false});
+        } else {
+          console.log(body);
+          var response = body;
+          return res.json(response);
+        }
+      });
+    }
+  });
+});
+
+app.post('/data/save', function(req, res) {
+  File.findById(req.body.id, function(err, file) {
+    if (err) {
+      return res.json({success: false});
+    } else {
+      var options = {
+        uri: "http://localhost:5000/save",
+        method: 'POST',
+        json: {"file": file, "data": req.body.data}
+      };
+      request(options, function (error, response, body) {
+        if (error) {
+          return res.json({success: false});
+        } else {
+          console.log(body);
+          var response = body;
+          return res.json(response);
+        }
+      });
+    }
+  });
+});
+
+
+app.post('/data/delete', function(req, res) {
+
+  File.findByIdAndRemove(req.body.id, function(err, file) {
+    if (err) {
+      return res.json({success: false});
+    } else {
+      var options = {
+        uri: "http://localhost:5000/delete",
+        method: 'POST',
+        json: file
+      };
+      request(options, function (error, response, body) {
+        if (error) {
+          return res.json({success: false});
+        } else {
+          console.log(body);
+          var response = body;
+          return res.json(response);
+        }
+      });
+    }
+  });
+});
+
+app.post('/apps/checks', function(req, res) {
+
+  File.findById(req.body.id, function(err, file) {
+    if (err) {
+      return res.json({success: false});
+    } else {
+      var options = {
+        uri: "http://localhost:5000/check",
+        method: 'POST',
+        json: file
+      };
+      request(options, function (error, response, body) {
+        if (error) {
+          return res.json({success: false});
+        } else {
+          console.log(body);
+          var response = body;
+          return res.json(response);
+        }
+      });
+    }
   });
 });
 
 
 app.get('/', function(req, res) {
+  console.log(path.join(__dirname, 'dist/vc/index.html'));
   res.sendFile(path.join(__dirname, 'dist/vc/index.html'));
 });
 

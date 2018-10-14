@@ -1,0 +1,82 @@
+<script>
+$(document).ready(function () {
+  $('#dtHorizontalVerticalExample').DataTable({
+    "scrollX": true,
+    "scrollY": 200,
+  });
+  $('.dataTables_length').addClass('bs-select');
+});
+</script>
+
+<div class="container">
+  <div class="row" style="width:100%">
+    <div class="card mt-3">
+        <div class="card-body text-left">
+            <h3>Data Logic Checks</h3>
+            <p>This application runs tests for data logic and
+            data quality. Before you run further data processing on this data set
+            or conduct analysis of the data, make sure that the report generated
+            from this application gives an all clear. If any of the data within
+            this data set fails a check, it will return a report of the rows in
+            your data set which failed the test. If any failures are reported
+            please delete the file for this dataset, make ammendments, and upload
+            a new file for the dataset.</p>
+            <hr>
+            <button class="btn btn-primary" (click)="runReport()">Run Test</button>
+        </div>
+    </div>
+  </div>
+
+  <div class="row mt-3">
+
+    <div class="card example-container mat-elevation-z8 mb-3" *ngIf = "showReport == true" style="width:100%; overflow-x: scroll;">
+      <div class="card-body">
+        <div class="alert alert-primary" role="alert">
+          {{ reportMessage }}
+        </div>
+
+        <mat-table #table [dataSource]="dataSource">
+
+          <ng-container *ngFor="let col of dataSetCols" matColumnDef="{{ col }}">
+            <mat-header-cell *matHeaderCellDef class="text-center">{{ col }}</mat-header-cell>
+            <mat-cell *matCellDef="let row">
+              <mat-form-field floatLabel="never">
+                <input matInput placeholder="{{ col }}" [value]="row[col]" [(ngModel)]="row[col]">
+              </mat-form-field>
+            </mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef = "dataSetCols"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: dataSetCols"></mat-row>
+
+        </mat-table>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="row my-3">
+    <div class="card" *ngIf = "showReport == true">
+      <div class = "card-body">
+        <table class="table table-bordered">
+          <tr>
+            <th></th>
+            <th>Test</th>
+            <th>Description</th>
+            <th>Rows</th>
+          </tr>
+          <tbody>
+            <tr *ngFor = "let test of report; let i = index" [attr.data-index]="i">
+              <td>{{ i }}</td>
+              <td>{{ test.test }}</td>
+              <td>{{ test.description }}</td>
+              <td>{{ test.rows }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div>

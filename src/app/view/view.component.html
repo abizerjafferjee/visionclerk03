@@ -1,0 +1,37 @@
+<div class="row m-3">
+
+  <div class="card example-container mat-elevation-z8" *ngIf = "showTable == true">
+    <div class="card-body">
+      <!-- <div class="alert alert-primary" role="alert">
+        {{ reportMessage }}
+      </div> -->
+      <div class="d-flex">
+        <div class="mr-auto p-2">
+          <button type="button" class="btn btn-success" (click)="saveDataTable()">Save</button>
+        </div>
+        <div class="p-2">
+        </div>
+        <div class="p-2">
+        </div>
+      </div>
+
+      <mat-table #table [dataSource]="dataSource" style="width:4000px;">
+
+        <ng-container *ngFor="let col of dataSetCols" matColumnDef="{{ col }}">
+          <mat-header-cell *matHeaderCellDef class="text-center">{{ col }}</mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            <mat-form-field floatLabel="never">
+              <input matInput placeholder="{{ col }}" [value]="row[col]" [(ngModel)]="row[col]">
+            </mat-form-field>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef = "dataSetCols"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: dataSetCols"></mat-row>
+
+      </mat-table>
+    </div>
+
+  </div>
+
+</div>

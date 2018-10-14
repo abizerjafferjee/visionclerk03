@@ -28,6 +28,16 @@ export class DataComponent implements OnInit {
 
   }
 
+  delete(fileId) {
+
+    this.http.post(this.url + '/data/delete', {"id":fileId})
+      .subscribe(resp => {
+        this.ngOnInit();
+      }, err => {
+
+      });
+  }
+
 
 
 }

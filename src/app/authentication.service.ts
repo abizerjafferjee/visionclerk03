@@ -62,42 +62,8 @@ export class AuthenticationService {
     }
   }
 
-  // private request(method: 'post'|'get', type: 'login'|'register'|'profile', user?: TokenPayload): Observable<any> {
-  //   let base;
-  //
-  //   if (method === 'post') {
-  //     base = this.http.post(`/api/${type}`, user);
-  //   } else {
-  //     base = this.http.get(`/api/${type}`, { headers: { Authorization: `Bearer ${this.getToken()}` }});
-  //   }
-  //
-  //   const request = base.pipe(
-  //     map((data: TokenResponse) => {
-  //       if (data.token) {
-  //         this.saveToken(data.token);
-  //       }
-  //       return data;
-  //     })
-  //   );
-  //
-  //   return request;
-  // }
-
-  // public register(user: TokenPayload): Observable<any> {
-  //   return this.request('post', 'register', user);
-  // }
-
-  // public login(user: TokenPayload): Observable<any> {
-  //   return this.request('post', 'login', user);
-  // }
-
-  // public profile(): Observable<any> {
-  //   return this.request('get', 'profile');
-  // }
-
   public logout(): void {
     this.token = '';
     window.localStorage.removeItem('jwtToken');
-    this.router.navigateByUrl('/login');
   }
 }

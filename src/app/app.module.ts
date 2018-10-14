@@ -13,20 +13,33 @@ import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { UploadModule } from './upload/upload.module';
 import { DataComponent } from './data/data.component';
+import { AppsComponent } from './apps/apps.component';
+import { ChecksComponent } from './apps/checks/checks.component';
+import { MatInputModule, MatPaginatorModule, MatProgressSpinnerModule,
+         MatSortModule, MatTableModule } from "@angular/material";
+import { ViewComponent } from './view/view.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     SignupComponent,
-    DataComponent
+    DataComponent,
+    AppsComponent,
+    ChecksComponent,
+    ViewComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpClientModule,
     AppRoutingModule,
-    UploadModule
+    UploadModule,
+    MatInputModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatProgressSpinnerModule
   ],
   providers: [RoutesService, AuthenticationService, AuthGuardService],
   bootstrap: [AppComponent]

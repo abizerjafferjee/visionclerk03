@@ -26,10 +26,8 @@ export class UploadService {
       });
 
       // create a new progress-subject for every file
-      const progress = new Subject<number>();
+      const progress = new Subject<any>();
 
-      var success = true;
-      var msg = "";
       // send the http-request and subscribe for progress-updates
       this.http.request(req).subscribe(event => {
         if (event.type === HttpEventType.UploadProgress) {
@@ -41,43 +39,14 @@ export class UploadService {
           progress.next(percentDone);
         } else if (event instanceof HttpResponse) {
 
-          if (event.body == {}) {
-            status[file.name] = {
-              progress: progress.asObservable(),
-              success: false,
-              msg: msg
-            };
-
-            return status;
-
-          }
-          // else {
-          //
-          //   if (event.body.success == false) {
-          //
-          //     status[file.name] = {
-          //       progress: progress.asObservable(),
-          //       success: false,
-          //       msg: event.body.msg
-          //     };
-          //
-          //     return status;
-          //
-          //   }
-          //
-          // }
-
-          // Close the progress-stream if we get an answer form the API
-          // The upload is complete
+          progress.next(event.body);
           progress.complete();
         }
       });
 
       // Save every progress-observable in a map of all observables
       status[file.name] = {
-        progress: progress.asObservable(),
-        success: success,
-        msg: msg
+        progress: progress.asObservable()
       };
     });
 

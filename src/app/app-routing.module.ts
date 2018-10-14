@@ -5,6 +5,9 @@ import {LoginComponent} from './login/login.component';
 import {SignupComponent} from './signup/signup.component';
 import {DataComponent} from './data/data.component';
 import { AuthGuardService } from './auth-guard.service';
+import { AppsComponent } from './apps/apps.component';
+import { ChecksComponent } from './apps/checks/checks.component';
+import {ViewComponent} from './view/view.component';
 
 const ROUTES = [
   {
@@ -25,6 +28,21 @@ const ROUTES = [
   {
     path: 'data',
     component: DataComponent,
+    canActivate: [AuthGuardService]
+  },
+  {
+    path: 'apps/:id',
+    component: AppsComponent,
+    canActivate: [AuthGuardService]
+  },
+  {
+    path: 'view/:id',
+    component: ViewComponent,
+    canActivate: [AuthGuardService]
+  },
+  {
+    path: 'apps/checks/:id',
+    component: ChecksComponent,
     canActivate: [AuthGuardService]
   }
 ];
