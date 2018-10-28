@@ -35,6 +35,16 @@ $(document).ready(function () {
           {{ reportMessage }}
         </div>
 
+        <div class="d-flex">
+          <div class="mr-auto p-2">
+            <button type="button" class="btn btn-success" (click)="saveDataTable()">Save</button>
+          </div>
+          <div class="p-2">
+          </div>
+          <div class="p-2">
+          </div>
+        </div>
+
         <mat-table #table [dataSource]="dataSource">
 
           <ng-container *ngFor="let col of dataSetCols" matColumnDef="{{ col }}">

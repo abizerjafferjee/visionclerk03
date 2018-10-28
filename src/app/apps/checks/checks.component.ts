@@ -30,11 +30,13 @@ export class ChecksComponent implements OnInit {
         if (resp["success"]) {
           if (resp["report"].length > 0) {
             this.report = JSON.parse(resp["report"]);
-            var parsedDF = this.parseDataFrame(JSON.parse(resp["data"]));
-            this.dataSetCols = parsedDF[0];
-            this.dataSet = parsedDF[1];
+            var data = JSON.parse(resp["data"]);
+            this.dataSet = data;
+            this.dataSetCols = Object.keys(data[0]);
+            // var parsedDF = this.parseDataFrame(JSON.parse(resp["data"]));
+            // this.dataSetCols = parsedDF[0];
+            // this.dataSet = parsedDF[1];
             this.dataSource = new MatTableDataSource(this.dataSet);
-            // console.log(this.dataSet);
             this.reportMessage = "Tests ran successfully. There are " + this.report.length + " failed tests. Please review the report and make necessary ammendments."
             this.showReport = true;
           } else {
@@ -63,6 +65,20 @@ export class ChecksComponent implements OnInit {
     }
 
     return [colNames, dataSet];
+  }
+
+  saveDataTable() {
+    this.http.post(this.url + '/data/save', {"id":this.tableId, "data": this.dataSet})
+      .subscribe(resp => {
+        if (resp["success"]) {
+          console.log("savedatatable success");
+        } else {
+          console.log("savedatatable success");
+        }
+      }, err => {
+        console.log("savedatatable success");
+      });
+
   }
 
 }

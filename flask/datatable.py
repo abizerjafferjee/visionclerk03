@@ -26,7 +26,9 @@ def get_datatable():
         print(e)
         return jsonify({"success": False})
 
-    data_set = df.to_json()
+    # data_set = df.to_dict(orient='index')
+    # print(data_set)
+    data_set = df.to_json(orient = 'records')
 
     response = {"success": True, "data": data_set}
     return jsonify(response)
@@ -64,6 +66,6 @@ def save_data():
         print(e)
         return jsonify({"success": False})
 
-    data_set = updated_df.to_json()
+    data_set = updated_df.to_json(orient = 'records')
 
     return jsonify({"success": True, "data": data_set})

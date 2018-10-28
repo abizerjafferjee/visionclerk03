@@ -1,0 +1,100 @@
+<div class="container">
+  <div class="row" style="width:100%">
+    <div class="card mt-3">
+        <div class="card-body text-left">
+            <h3>Deduplicate Data</h3>
+            <p>This application finds all duplicate rows within the data set. Using machine learning, it groups rows of data into clusters if the rows are potential duplicates.
+              Go through each cluster and confirm if the rows within the clusters are actually duplicates.
+            </p>
+            <hr>
+            <button class="btn btn-primary" (click)="getClusters()">Get Duplicates</button>
+        </div>
+    </div>
+  </div>
+
+  <div class="row mt-3">
+
+    <div *ngFor="let cluster of cluster_groups" class="card example-container mat-elevation-z8 mb-3" style="width:100%; overflow-x: scroll;">
+      <div class="card-body">
+
+        <div class="d-flex">
+          <div class="mr-auto p-2">
+            Cluster Id: {{ cluster['cluster_id'] }}
+          </div>
+          <div class="p-2">
+          </div>
+          <div class="p-2">
+            <button type="button" class="btn btn-success btn-sm" (click)="mergeAllRows(cluster['cluster_id'])">Merge rows</button>
+          </div>
+        </div>
+
+        <p class="text-left">Merge row for Cluster</p>
+
+        <mat-table #table [dataSource]="cluster['canonical_rep_data']">
+
+          <ng-container *ngFor="let col of cluster['rep_columns']" matColumnDef="{{ col }}">
+            <mat-header-cell *matHeaderCellDef class="text-center">{{ col }}</mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{ row[col] }} </mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef = "cluster['rep_columns']"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: cluster['rep_columns']"></mat-row>
+
+        </mat-table>
+
+        <p class="text-left mt-2">Records in Cluster</p>
+
+        <mat-table #table [dataSource]="cluster['records_data']">
+
+          <ng-container *ngFor="let col of cluster['records_columns']" matColumnDef="{{ col }}">
+            <mat-header-cell *matHeaderCellDef class="text-center">{{ col }}</mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{ row[col] }} </mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef = "cluster['records_columns']"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: cluster['records_columns']"></mat-row>
+
+        </mat-table>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- <div class="row mt-3">
+
+    <div *ngFor="let cluster of cluster_groups" class="card example-container mat-elevation-z8 mb-3" style="width:100%; overflow-x: scroll;">
+      <div class="card-body">
+
+        <div class="d-flex">
+          <div class="mr-auto p-2">
+            Cluster Id: {{ cluster['cluster_id'] }}
+          </div>
+          <div class="p-2">
+          </div>
+          <div class="p-2">
+          </div>
+        </div>
+
+        <p class="text-left">Merge row for Cluster</p>
+
+        <table class="table table-bordered">
+          <tr>
+            <th *ngFor = "let col of cluster['rep_columns']">{{col}}</th>
+          </tr>
+          <tbody>
+            <tr *ngFor = "let row of cluster['canonical_rep']">
+              <td *ngFor = "let col of cluster['rep_columns']">{{ row[col] }}</td>
+              <td><button type="button" class="btn btn-success btn-sm" [routerLink]="['/view', file._id]">View</button></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p class="text-left mt-2">Records in Cluster</p>
+
+
+      </div>
+    </div>
+
+  </div> -->
+
+</div>

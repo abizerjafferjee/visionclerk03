@@ -2,6 +2,7 @@ from flask import Flask
 import pymongo
 import psycopg2
 import sys
+import logging
 sys.path.append('./flask')
 
 # print(sys.path)
@@ -9,13 +10,18 @@ from logic import logic_check
 from upload import upload
 from delete import delete
 from datatable import datatable
+from deduplicate import dedupe
 
 app = Flask(__name__)
+
+app.logger.setLevel(logging.DEBUG)
+logging.basicConfig(level=logging.DEBUG)
+
 app.register_blueprint(upload)
 app.register_blueprint(delete)
 app.register_blueprint(logic_check)
 app.register_blueprint(datatable)
-
+app.register_blueprint(dedupe)
 
 def connect_psql():
     psqldb = "host='visionclerk.ccikg5ltpbua.us-east-1.rds.amazonaws.com' dbname='visionclerk03' user='abizerjafferjee95' password='Qsaxzop15!'"

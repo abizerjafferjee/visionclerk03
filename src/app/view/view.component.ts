@@ -30,10 +30,13 @@ export class ViewComponent implements OnInit {
     this.http.post(this.url + '/data/datatable', {"id":this.tableId})
       .subscribe(resp => {
         if (resp["success"]) {
-          var parsedDF = this.parseDataFrame(JSON.parse(resp["data"]));
-          this.dataSetCols = parsedDF[0];
-          this.dataSet = parsedDF[1];
-          console.log(this.dataSet);
+          var data = JSON.parse(resp["data"]);
+          this.dataSet = data;
+          this.dataSetCols = Object.keys(data[0]);
+          // var parsedDF = this.parseDataFrame(JSON.parse(resp["data"]));
+          // this.dataSetCols = parsedDF[0];
+          // this.dataSet = parsedDF[1];
+          // console.log(this.dataSet)
           this.dataSource = new MatTableDataSource(this.dataSet);
           this.showTable = true;
         }
@@ -61,15 +64,15 @@ export class ViewComponent implements OnInit {
   }
 
   saveDataTable() {
-    console.log(this.dataSource);
-    console.log(this.dataSet);
-
     this.http.post(this.url + '/data/save', {"id":this.tableId, "data": this.dataSet})
       .subscribe(resp => {
         if (resp["success"]) {
+          this.getDataSet()
+        } else {
+          console.log("savedatatable false");
         }
       }, err => {
-
+        console.log("savedatatable error");
       });
 
   }

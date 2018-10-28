@@ -132,7 +132,6 @@ app.post('/data/datatable', function(req, res) {
         if (error) {
           return res.json({success: false});
         } else {
-          console.log(body);
           var response = body;
           return res.json(response);
         }
@@ -204,7 +203,7 @@ app.post('/apps/checks', function(req, res) {
         if (error) {
           return res.json({success: false});
         } else {
-          console.log(body);
+          // console.log(body);
           var response = body;
           return res.json(response);
         }
@@ -213,6 +212,52 @@ app.post('/apps/checks', function(req, res) {
   });
 });
 
+app.post('/apps/dedupe', function(req, res) {
+
+  File.findById(req.body.id, function(err, file) {
+    if (err) {
+      return res.json({success: false});
+    } else {
+      var options = {
+        uri: "http://localhost:5000/dedupe",
+        method: 'POST',
+        json: file
+      };
+      request(options, function (error, response, body) {
+        if (error) {
+          return res.json({success: false});
+        } else {
+          // console.log(body);
+          var response = body;
+          return res.json(response);
+        }
+      });
+    }
+  });
+});
+
+app.post('/apps/dedupe/mergeCluster', function(req, res) {
+  File.findById(req.body.id, function(err, file) {
+    if (err) {
+      return res.json({success: false});
+    } else {
+      var options = {
+        uri: "http://localhost:5000/dedupe/mergeCluster",
+        method: 'POST',
+        json: {'file': file, 'group': req.body.group}
+      };
+      request(options, function (error, response, body) {
+        if (error) {
+          return res.json({success: false});
+        } else {
+          // console.log(body);
+          var response = body;
+          return res.json(response);
+        }
+      });
+    }
+  });
+});
 
 app.get('/', function(req, res) {
   console.log(path.join(__dirname, 'dist/vc/index.html'));

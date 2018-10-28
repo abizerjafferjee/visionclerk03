@@ -2,9 +2,6 @@
 
   <div class="card example-container mat-elevation-z8" *ngIf = "showTable == true">
     <div class="card-body">
-      <!-- <div class="alert alert-primary" role="alert">
-        {{ reportMessage }}
-      </div> -->
       <div class="d-flex">
         <div class="mr-auto p-2">
           <button type="button" class="btn btn-success" (click)="saveDataTable()">Save</button>
@@ -15,7 +12,7 @@
         </div>
       </div>
 
-      <mat-table #table [dataSource]="dataSource" style="width:4000px;">
+      <mat-table #table [dataSource]="dataSource" style="width:3000px;">
 
         <ng-container *ngFor="let col of dataSetCols" matColumnDef="{{ col }}">
           <mat-header-cell *matHeaderCellDef class="text-center">{{ col }}</mat-header-cell>

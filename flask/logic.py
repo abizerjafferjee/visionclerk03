@@ -37,11 +37,18 @@ def perform_checks():
     report = []
 
     def empty_string_helper(cols):
-        values = df[cols].apply(lambda x: x == 'nan').values
+        values = df[cols].apply(lambda x: x == 'nan')
+        # values = values.tolist()
+
+        print(values)
+
         rows = []
-        for i in range(len(values)):
-            if True in values[i]:
-                rows.append(i)
+        count = 0
+        # for i in values:
+            # print(i)
+            # if True in i:
+            #     rows.append(count)
+            # count += 1
         return rows
 
     def empty_number_helper(cols):
@@ -92,7 +99,7 @@ def perform_checks():
     add_to_flags(3, non_unique_invoice_numbers)
 
     # invoices without purchase orders
-    empty_purchase_orders_cols = ['po_number']
+    empty_purchase_orders_cols = 'po_number'
     empty_purchase_orders = empty_string_helper(empty_purchase_orders_cols)
     report_helper('empty-purchase-orders', empty_purchase_orders, 'po_number column has empty values.')
     add_to_flags(4, empty_purchase_orders)
@@ -149,12 +156,12 @@ def perform_checks():
 
     df['flags'] = flags
 
-    data_set = {}
-    for col in df.columns:
-        data_set[col] = df[col]
+    # data_set = {}
+    # for col in df.columns:
+    #     data_set[col] = df[col]
 
     # data_set = json.dumps(df)
-    data_set = df.to_json()
+    data_set = df.to_json(orient='records')
 
     report = json.dumps(report)
 

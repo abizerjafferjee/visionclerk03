@@ -7,6 +7,7 @@ import {DataComponent} from './data/data.component';
 import { AuthGuardService } from './auth-guard.service';
 import { AppsComponent } from './apps/apps.component';
 import { ChecksComponent } from './apps/checks/checks.component';
+import { DedupeComponent } from './apps/dedupe/dedupe.component';
 import {ViewComponent} from './view/view.component';
 
 const ROUTES = [
@@ -43,6 +44,11 @@ const ROUTES = [
   {
     path: 'apps/checks/:id',
     component: ChecksComponent,
+    canActivate: [AuthGuardService]
+  },
+  {
+    path: 'apps/dedupe/:id',
+    component: DedupeComponent,
     canActivate: [AuthGuardService]
   }
 ];

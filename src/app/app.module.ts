@@ -18,6 +18,7 @@ import { ChecksComponent } from './apps/checks/checks.component';
 import { MatInputModule, MatPaginatorModule, MatProgressSpinnerModule,
          MatSortModule, MatTableModule } from "@angular/material";
 import { ViewComponent } from './view/view.component';
+import { DedupeComponent } from './apps/dedupe/dedupe.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { ViewComponent } from './view/view.component';
     DataComponent,
     AppsComponent,
     ChecksComponent,
-    ViewComponent
+    ViewComponent,
+    DedupeComponent
   ],
   imports: [
     BrowserModule,
