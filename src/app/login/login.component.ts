@@ -15,8 +15,8 @@ export class LoginComponent implements OnInit {
   loginData = {email: '', password: ''};
   message = '';
   data: any;
-  // url = 'http://18.234.225.173:3000'
-  url = 'http://localhost:3000'
+  url = 'http://18.234.225.173:3000'
+  // url = 'http://localhost:3000'
 
   constructor(private http: HttpClient, private router: Router, private auth: AuthenticationService) { }
 

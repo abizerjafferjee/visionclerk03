@@ -10,7 +10,8 @@ import { Router } from "@angular/router";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  url = 'http://localhost:3000';
+  // url = 'http://localhost:3000';
+  url = 'http://18.234.225.173:3000'
   user;
   show = true;
 

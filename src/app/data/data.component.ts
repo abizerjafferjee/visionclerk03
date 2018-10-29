@@ -10,7 +10,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 export class DataComponent implements OnInit {
 
-  url = 'http://localhost:3000';
+  // url = 'http://localhost:3000';
+  url = 'http://18.234.225.173:3000'
   files;
   fileCount;
 

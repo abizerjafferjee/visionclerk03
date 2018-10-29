@@ -3,7 +3,8 @@ import { HttpClient, HttpRequest, HttpEventType, HttpResponse, HttpHeaders } fro
 import { Subject } from 'rxjs';
 import { Observable } from 'rxjs';
 
-const url = 'http://localhost:3000/upload';
+// const url = 'http://localhost:3000/upload';
+const url = 'http://18.234.225.173:3000/upload'
 
 @Injectable()
 export class UploadService {

@@ -8,9 +8,12 @@ import { map } from 'rxjs/operators';
 })
 export class RoutesService {
 
+  url = 'http://18.234.225.173:3000'
+  // url = 'http://localhost:3000/'
+
   constructor(private http: HttpClient) { }
 
   getMain() {
-    return this.http.get('http://localhost:3000/');
+    return this.http.get(this.url);
   }
 }

@@ -12,7 +12,8 @@ export class DedupeComponent implements OnInit {
 
   tableId;
   cluster_groups;
-  url = "http://localhost:3000"
+  // url = "http://localhost:3000";
+  url = 'http://18.234.225.173:3000'
 
   constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute) { }
 
@@ -29,7 +30,7 @@ export class DedupeComponent implements OnInit {
             // console.log(this.cluster_groups[cluster]);
             // this.cluster_groups[cluster]['rep_columns'] = Object.keys(this.cluster_groups[cluster]['canonical_rep']);
             this.cluster_groups[cluster]['rep_columns'] = ['invoice_number', 'invoice_net_amount', 'source']
-            this.cluster_groups[cluster]['canonical_rep_date'] = new MatTableDataSource([this.cluster_groups[cluster]['canonical_rep']]);
+            this.cluster_groups[cluster]['canonical_rep_data'] = new MatTableDataSource([this.cluster_groups[cluster]['canonical_rep']]);
             // this.cluster_groups[cluster]['records_columns'] = Object.keys(this.cluster_groups[cluster]['records'][0]);
             this.cluster_groups[cluster]['records_columns'] = ['invoice_number', 'invoice_net_amount', 'source', 'cluster_id', 'confidence']
             this.cluster_groups[cluster]['records_data'] = new MatTableDataSource(this.cluster_groups[cluster]['records']);
@@ -53,6 +54,7 @@ export class DedupeComponent implements OnInit {
     this.http.post(this.url + '/apps/dedupe/mergeCluster', {'id':this.tableId, 'group': send_group})
       .subscribe(resp => {
         if (resp["success"]) {
+          // remove certain id from cluster
         }
       }, err => {
         console.log(err);
