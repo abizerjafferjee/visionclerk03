@@ -12,7 +12,7 @@ datatable = Blueprint('datatable', __name__, template_folder='templates')
 
 psql_conn, psql_cursor = connect_psql()
 
-engine = create_engine('postgresql://abizerjafferjee95:Qsaxzop15!@visionclerk.ccikg5ltpbua.us-east-1.rds.amazonaws.com:5432/visionclerk03')
+engine = create_engine('postgresql://un:pw@ip:5432/')
 
 
 @datatable.route('/datatable', methods = ['POST', 'GET'])
