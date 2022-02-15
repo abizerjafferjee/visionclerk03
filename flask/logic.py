@@ -11,7 +11,7 @@ from connect_db import connect_psql
 sys.path.append('./flask')
 
 # def connect_psql():
-#     psqldb = "host='visionclerk.ccikg5ltpbua.us-east-1.rds.amazonaws.com' dbname='visionclerk03' user='abizerjafferjee95' password='Qsaxzop15!'"
+#     psqldb = "host='us-east-1.rds.amazonaws.com' dbname='' user='' password=''"
 #     conn = psycopg2.connect(psqldb)
 #     cursor = conn.cursor()
 #     print ("Connected to PSQL")
@@ -19,7 +19,7 @@ sys.path.append('./flask')
 
 # psql_conn, psql_cursor = connect_psql()
 
-engine = create_engine('postgresql://abizerjafferjee95:Qsaxzop15!@visionclerk.ccikg5ltpbua.us-east-1.rds.amazonaws.com:5432/visionclerk03')
+engine = create_engine('postgresql://')
 
 
 logic_check = Blueprint('login_check', __name__, template_folder='templates')
