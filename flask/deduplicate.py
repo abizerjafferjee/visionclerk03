@@ -13,7 +13,7 @@ sys.path.append('./models')
 from train_dedupe import *
 import json
 
-engine = create_engine('postgresql://abizerjafferjee95:Qsaxzop15!@visionclerk.ccikg5ltpbua.us-east-1.rds.amazonaws.com:5432/visionclerk03')
+engine = create_engine('postgresql://un:pw@domain.us-east-1.rds.amazonaws.com:5432')
 
 dedupe = Blueprint('dedupe', __name__, template_folder='templates')
 
