@@ -8,7 +8,7 @@ sys.path.append('./flask')
 
 upload = Blueprint('upload', __name__, template_folder='templates')
 
-engine = create_engine('postgresql://abizerjafferjee95:Qsaxzop15!@visionclerk.ccikg5ltpbua.us-east-1.rds.amazonaws.com:5432/visionclerk03')
+engine = create_engine('')
 
 dataModel = [{"name": "invoice_number", "required": True, "type": "string"},
 {"name": "invoice_net_amount", "required": True, "type": "number"},
