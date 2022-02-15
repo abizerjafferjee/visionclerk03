@@ -1,10 +1,10 @@
 const { Pool, Client } = require('pg')
 
 const client = new Client({
-  user: 'abizerjafferjee95',
-  host: 'visionclerk.ccikg5ltpbua.us-east-1.rds.amazonaws.com',
-  database: 'visionclerk03',
-  password: 'Qsaxzop15!',
+  user: '',
+  host: '',
+  database: '',
+  password: '',
   port: 5432
 });
 
